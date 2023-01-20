@@ -24,7 +24,7 @@
  *
  */
 function getComposition(f, g) {
-  return x => f(g(x))
+  return (x) => f(g(x));
 }
 
 
@@ -33,7 +33,6 @@ function getComposition(f, g) {
  *
  * @param {number} exponent
  * @return {Function}
- *
  * @example
  *   const power2 = getPowerFunction(2); // => x^2
  *   power2(2) => 4
@@ -45,7 +44,7 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
-  return x => Math.pow(x, exponent)
+  return (x) => (x ** exponent);
 }
 
 

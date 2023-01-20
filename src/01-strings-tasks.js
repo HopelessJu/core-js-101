@@ -19,7 +19,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-  return value1.concat(value2)
+  return value1.concat(value2);
 }
 
 
@@ -35,7 +35,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-  return value.length
+  return value.length;
 }
 
 /**
@@ -52,7 +52,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-  return `Hello, ${firstName} ${lastName}!`
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.slice(7, value.length - 1)
+  return value.slice(7, value.length - 1);
 }
 
 
@@ -81,7 +81,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-  return value.substring(0,1)
+  return value.substring(0, 1);
 }
 
 /**
@@ -127,7 +127,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-  return str.replace(value, '')
+  return str.replace(value, '');
 }
 
 /**
@@ -180,12 +180,11 @@ function convertToUpperCase(str) {
 function extractEmails(str) {
   const regex = /[@]/g;
   const a = str.match(regex);
+  const newStr = str.split(';');
   if (a.length > 1) {
-    str = str.split(';');
-    return [...str]
-  }else {
-    return [str]
+    return [...newStr];
   }
+  return [...newStr];
 }
 
 /**
@@ -218,15 +217,14 @@ function getRectangleString(width, height) {
   const horizontal = String.fromCharCode(0x2500);
   const lowerLeftCorner = String.fromCharCode(0x02514);
   const lowerRightCorner = String.fromCharCode(0x02518);
-  let hor = horizontal.repeat(width - 2);
+  const hor = horizontal.repeat(width - 2);
   let space = '';
   space = space.padEnd(width - 2);
-  let upperRow = `${upperLeftCorner}${hor}${upperRightCorner}\n`;
-  let lowerRow = `${lowerLeftCorner}${hor}${lowerRightCorner}\n`;
-  let inter = `${vertical}${space}${vertical}\n`
- return `${upperRow}${inter.repeat(height - 2)}${lowerRow}`;
+  const upperRow = `${upperLeftCorner}${hor}${upperRightCorner}\n`;
+  const lowerRow = `${lowerLeftCorner}${hor}${lowerRightCorner}\n`;
+  const inter = `${vertical}${space}${vertical}\n`;
+  return `${upperRow}${inter.repeat(height - 2)}${lowerRow}`;
 }
-
 
 
 /**
@@ -246,7 +244,7 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-  return str.replace(/[a-z]/gi, letter => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)))
+  return str.replace(/[a-z]/gi, (letter) => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
 }
 
 /**
@@ -263,7 +261,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  return (Object.prototype.toString.call(value) === '[object String]')
+  return (Object.prototype.toString.call(value) === '[object String]');
 }
 
 
@@ -292,27 +290,26 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  const suits = ['♣', '♦', '♥', '♠'];
-  const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+  const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   let cardId = null;
-  let arrayFromValue = value.split('');
+  const arrayFromValue = value.split('');
   let cardIndex = null;
   if (arrayFromValue.length > 2) {
-    cardIndex = values.findIndex(value => value === arrayFromValue[0] +arrayFromValue[1] )
+    cardIndex = values.findIndex((value2) => value2 === arrayFromValue[0] + arrayFromValue[1]);
   } else {
-    cardIndex = values.findIndex(value => value === arrayFromValue[0])
+    cardIndex = values.findIndex((value2) => value2 === arrayFromValue[0]);
   }
   const suit = arrayFromValue[arrayFromValue.length - 1];
-  if (suit ==='♣') {
-    cardId = cardIndex + 0
-  } else if (suit ==='♦'){
+  if (suit === '♣') {
+    cardId = cardIndex + 0;
+  } else if (suit === '♦') {
     cardId = cardIndex + 13;
-  } else if (suit ==='♥'){
+  } else if (suit === '♥') {
     cardId = cardIndex + 26;
   } else {
-    cardId = cardIndex + 39
+    cardId = cardIndex + 39;
   }
-  return cardId
+  return cardId;
 }
 
 module.exports = {
