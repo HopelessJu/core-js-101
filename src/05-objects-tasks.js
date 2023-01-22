@@ -20,8 +20,12 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  return {
+    width,
+    height,
+    getArea: () => width * height,
+  };
 }
 
 
@@ -113,32 +117,66 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    if (this.value && [':', '[', ']', '.', '::', '#'].some((i) => this.value.includes(i))) {
+      throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+
+    if (this.value) {
+      throw Error('Element, id and pseudo-element should not occur more then one time inside the selector');
+    }
+    return { ...this, value };
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    if (this.value && this.value.includes('#')) {
+      throw Error('Element, id and pseudo-element should not occur more then one time inside the selector');
+    }
+
+    if (this.value && [':', '[', ']', '.', '::'].some((i) => this.value.includes(i))) {
+      throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+
+    return { ...this, value: `${this.value || ''}#${value}` };
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    if (this.value && [':', '[', ']', '::'].some((i) => this.value.includes(i))) {
+      throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+
+    return { ...this, value: `${this.value || ''}.${value}` };
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    if (this.value && [':', '::'].some((i) => this.value.includes(i))) {
+      throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+
+    return { ...this, value: `${this.value || ''}[${value}]` };
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    if (this.value && ['::'].some((i) => this.value.includes(i))) {
+      throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+
+    return { ...this, value: `${this.value || ''}:${value}` };
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    if (this.value && this.value.includes('::')) {
+      throw Error('Element, id and pseudo-element should not occur more then one time inside the selector');
+    }
+    return { ...this, value: `${this.value || ''}::${value}` };
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selector1, combinator, selector2) {
+    return { ...this, value: `${selector1.stringify()} ${combinator} ${selector2.stringify()}` };
+  },
+
+  stringify() {
+    return `${this.value}`;
   },
 };
 

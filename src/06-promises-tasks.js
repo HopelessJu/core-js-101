@@ -71,14 +71,14 @@ function processAllPromises(array) {
  *      Promise.resolve('first'),
  *      new Promise(resolve => setTimeout(() => resolve('second'), 500)),
  *    ];
- *    const p = processAllPromises(promises);
+ *    const p = getFastestPromise(promises);
  *    p.then((res) => {
  *      console.log(res) // => [first]
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array.map((p) => p.then((data) => data)));
 }
 
 /**
@@ -98,8 +98,22 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  return new Promise((resolve) => {
+    const results = [];
+    array.forEach((promise, index) => {
+      promise
+        .then((res) => {
+          results[index] = res;
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (index === array.length - 1) {
+            resolve(results.reduce(action));
+          }
+        });
+    });
+  });
 }
 
 module.exports = {

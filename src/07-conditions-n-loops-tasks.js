@@ -316,8 +316,14 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const arrFromNum = num.toString().split('')
+    .reduce((acc, curr) => +acc + +curr, 0);
+  const res = arrFromNum.toString().split('');
+  if (res.length < 2) {
+    return arrFromNum;
+  }
+  return res.reduce((acc, curr) => +acc + +curr, 0);
 }
 
 
@@ -344,6 +350,24 @@ function getDigitalRoot(/* num */) {
  */
 function isBracketsBalanced(/* str */) {
   throw new Error('Not implemented');
+  // const opening = ['(', '[', '{'];
+  // const closing = [')', ']', '}'];
+  // let count = 0;
+  // let arr = str.split('');
+  // if(arr.length % 2 !== 0) {
+  //   return false
+  // }
+  // arr.map((x, i) => {
+  //   if(closing.includes(x) && count === 0) {
+  //     return false
+  //   }
+  //   if(opening.includes(x)){
+  //     count +=1;
+  //   } else if(closing.includes(x) && ){
+  //     count -=1
+  //   }
+  // })
+  // return count === 0 ? true : false
 }
 
 
@@ -444,6 +468,28 @@ function getMatrixProduct(/* m1, m2 */) {
  */
 function evaluateTicTacToePosition(/* position */) {
   throw new Error('Not implemented');
+  //   // Check rows
+  //   for (let i = 0; i < 3; i++) {
+  //     if (position[i][0] === position[i][1] && position[i][1] === position[i][2]) {
+  //         return String.fromCharCode(position[i][0]);
+  //     }
+  //   }
+  // // Check columns
+  // for (let i = 0; i < 3; i++) {
+  //     if (position[0][i] === position[1][i] && position[1][i] === position[2][i]) {
+  //         return String.fromCharCode(position[0][i]);
+  //     }
+  // }
+  // // Check diagonals
+  // if (position[0][0] === position[1][1] && position[1][1] === position[2][2]) {
+  //     return String.fromCharCode(position[0][0]);
+  // }
+  // if (position[0][2] === position[1][1] && position[1][1] === position[2][0]) {
+  //     return String.fromCharCode(position[0][2]);
+  // }
+
+  // // No winner
+  // return undefined;
 }
 
 
