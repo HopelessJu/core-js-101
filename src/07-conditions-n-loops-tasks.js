@@ -355,10 +355,49 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+  const openBrackets = new Set(['(', '[', '{', '<']);
+  const closedBrackets = new Set([')', ']', '}', '>']);
+  const bracketPairs = {
+    ')': '(',
+    ']': '[',
+    '}': '{',
+    '>': '<',
+  };
+
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str[i];
+    if (openBrackets.has(char)) {
+      stack.push(char);
+    } else if (closedBrackets.has(char)) {
+      if (stack.length === 0 || stack[stack.length - 1] !== bracketPairs[char]) {
+        return false;
+      }
+      stack.pop();
+    }
+  }
+
+  return stack.length === 0;
+  // throw new Error('Not implemented');
   // const opening = ['(', '[', '{'];
   // const closing = [')', ']', '}'];
+  // const brackets = {
+  //   "(": 0,
+  //   ")": 0,
+  //   "[": 0,
+  //   "]": 0,
+  //   "{": 0,
+  //   "}": 0
+  // };
+
+  // str.split('').forEach(bracket => {
+  //   brackets[bracket] = brackets[bracket] + 1;
+  // })
+
+  // return brackets['('] === brackets[')'] &&
+  //  brackets['{'] === brackets['}'] &&
+  //   brackets['['] === brackets[']'];
   // let count = 0;
   // let arr = str.split('');
   // if(arr.length % 2 !== 0) {
@@ -370,7 +409,7 @@ function isBracketsBalanced(/* str */) {
   //   }
   //   if(opening.includes(x)){
   //     count +=1;
-  //   } else if(closing.includes(x) && ){
+  //   } else if(closing.includes(x)){
   //     count -=1
   //   }
   // })
@@ -487,30 +526,24 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-  //   // Check rows
-  //   for (let i = 0; i < 3; i++) {
-  //     if (position[i][0] === position[i][1] && position[i][1] === position[i][2]) {
-  //         return String.fromCharCode(position[i][0]);
-  //     }
-  //   }
-  // // Check columns
-  // for (let i = 0; i < 3; i++) {
-  //     if (position[0][i] === position[1][i] && position[1][i] === position[2][i]) {
-  //         return String.fromCharCode(position[0][i]);
-  //     }
-  // }
-  // // Check diagonals
-  // if (position[0][0] === position[1][1] && position[1][1] === position[2][2]) {
-  //     return String.fromCharCode(position[0][0]);
-  // }
-  // if (position[0][2] === position[1][1] && position[1][1] === position[2][0]) {
-  //     return String.fromCharCode(position[0][2]);
-  // }
-
-  // // No winner
-  // return undefined;
+function evaluateTicTacToePosition(position) {
+  for (let i = 0; i < 3; i += 1) {
+    if (position[i][0] === position[i][1] && position[i][1] === position[i][2] && position[i][0]) {
+      return position[i][0];
+    }
+  }
+  for (let i = 0; i < 3; i += 1) {
+    if (position[0][i] === position[1][i] && position[1][i] === position[2][i]) {
+      return position[0][i];
+    }
+  }
+  if (position[0][0] === position[1][1] && position[1][1] === position[2][2]) {
+    return position[0][0];
+  }
+  if (position[0][2] === position[1][1] && position[1][1] === position[2][0]) {
+    return position[0][2];
+  }
+  return undefined;
 }
 
 
