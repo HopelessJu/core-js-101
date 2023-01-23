@@ -298,9 +298,16 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const ccn2 = ccn.toString().split('').map(Number).reverse();
+  return ccn2.reduce((sum, digit, index) => {
+    let newDigit = digit;
+    if (index % 2 === 1) newDigit *= 2;
+    if (newDigit > 9) newDigit -= 9;
+    return sum + newDigit;
+  }, 0) % 10 === 0;
 }
+
 
 /**
  * Returns the digital root of integer:
@@ -408,8 +415,10 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const dirs = pathes.map((path) => path.split('/'));
+  const index = dirs[0].findIndex((x, i) => dirs.some((dir) => x !== dir[i]));
+  return index === 0 ? '' : `${dirs[0].slice(0, index).join('/')}/`;
 }
 
 
@@ -431,8 +440,20 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const m1NumRows = m1.length; const m1NumCols = m1[0].length;
+  const m2NumCols = m2[0].length;
+  const m = new Array(m1NumRows); // initialize array of rows
+  for (let r = 0; r < m1NumRows; r += 1) {
+    m[r] = new Array(m2NumCols); // initialize the current row
+    for (let c = 0; c < m2NumCols; c += 1) {
+      m[r][c] = 0; // initialize the current cell
+      for (let i = 0; i < m1NumCols; i += 1) {
+        m[r][c] += m1[r][i] * m2[i][c];
+      }
+    }
+  }
+  return m;
 }
 
 
